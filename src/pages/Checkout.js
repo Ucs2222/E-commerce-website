@@ -17,6 +17,7 @@ const Checkout = () => {
   const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState({ name: '', address: '', phone: '' });
 
+  // Styling
   useEffect(() => {
     const style = document.createElement('style');
     style.innerHTML = `
@@ -36,6 +37,7 @@ const Checkout = () => {
     return () => document.head.removeChild(style);
   }, []);
 
+  // Fetch user + address
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -45,23 +47,27 @@ const Checkout = () => {
 
     axios.get('http://localhost:5000/api/auth/profile', {
       headers: { Authorization: `Bearer ${token}` },
-    }).then(res => {
-      const userData = res.data;
-      setUser(userData);
-      setDetails(prev => ({
-        ...prev,
-        name: userData.name,
-        phone: userData.phone || '',
-      }));
-      return axios.get(`http://localhost:5000/api/address/${userData.id}`);
-    }).then(addrRes => {
-      setAddresses(addrRes.data);
-    }).catch(() => {
-      alert('Failed to load profile or addresses.');
-      navigate('/login');
-    });
+    })
+      .then(res => {
+        const userData = res.data;
+        setUser(userData);
+        setDetails(prev => ({
+          ...prev,
+          name: userData.name,
+          phone: userData.phone || '',
+        }));
+        return axios.get(`http://localhost:5000/api/address/${userData.id}`);
+      })
+      .then(addrRes => {
+        setAddresses(addrRes.data);
+      })
+      .catch(() => {
+        alert('Failed to load profile or addresses.');
+        navigate('/login');
+      });
   }, [navigate]);
 
+  // Load cart or single product
   useEffect(() => {
     if (productId) {
       axios.get(`http://localhost:5000/api/products/${productId}`)
@@ -118,16 +124,18 @@ const Checkout = () => {
           userDetails,
         };
 
+    const fullState = {
+      ...baseState,
+      totalAmount: totalPrice,
+      productCount: productId ? 1 : cartItems.length,
+    };
+
     if (paymentMethod === 'razorpay') {
-      navigate('/razorpay-payment', {
-        state: {
-          ...baseState,
-          totalAmount: totalPrice,
-        },
-      });
-    } else {
-      const nextPath = paymentMethod === 'googlepay' ? '/upi' : '/cod-detail';
-      navigate(nextPath, { state: baseState });
+      navigate('/razorpay-payment', { state: fullState });
+    } else if (paymentMethod === 'googlepay') {
+      navigate('/upi', { state: fullState });
+    } else if (paymentMethod === 'cod') {
+      navigate('/cod-detail', { state: fullState });
     }
   };
 
@@ -138,6 +146,7 @@ const Checkout = () => {
       <div className="glass-box p-4" style={{ width: '100%', maxWidth: '900px' }}>
         <h2 className="mb-4">🧾 Checkout</h2>
 
+        {/* Product/Cart Summary */}
         <div className="glass-box p-3 mb-4">
           {productId && singleProduct ? (
             <div className="d-flex">
@@ -183,7 +192,9 @@ const Checkout = () => {
           <h5 className="text-end mt-3">Total: ₹{totalPrice}</h5>
         </div>
 
+        {/* Checkout Form */}
         <form onSubmit={handleSubmit}>
+          {/* Delivery Info */}
           <div className="glass-box p-4 mb-4">
             <h4 className="mb-3">Delivery Details</h4>
             {addresses.length > 0 && (
@@ -230,6 +241,7 @@ const Checkout = () => {
             </div>
           </div>
 
+          {/* Payment Selection */}
           <div className="glass-box p-4 mb-4">
             <h4 className="mb-3">Payment Method</h4>
             <select
@@ -245,6 +257,7 @@ const Checkout = () => {
             </select>
           </div>
 
+          {/* Submit Button */}
           <div className="d-grid">
             <button type="submit" className="btn btn-light fw-bold">
               {paymentMethod === 'razorpay'
