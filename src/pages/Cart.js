@@ -99,7 +99,7 @@ const Cart = () => {
                 <div key={item.product_id} className="col-md-4">
                   <div className="card h-100 shadow-sm">
                     <img
-                      src={item.image_url}
+                      src={item.image_base64}
                       alt={item.name}
                       className="card-img-top"
                       style={{

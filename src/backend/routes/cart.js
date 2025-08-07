@@ -56,8 +56,13 @@ router.delete('/remove', async (req, res) => {
 
 // Get cart items
 // Get cart items with full product details
+const fs = require('fs');
+const path = require('path');
+
+// Get cart items with full product details + image in Base64
 router.get('/:userId', async (req, res) => {
   const userId = req.params.userId;
+
   try {
     const [items] = await pool.query(
       `SELECT 
@@ -76,11 +81,26 @@ router.get('/:userId', async (req, res) => {
        WHERE c.user_id = ?`,
       [userId]
     );
-    res.json(items);
+
+    // Convert image paths to Base64
+    const itemsWithBase64 = items.map((item) => {
+      try {
+        const imagePath = path.join(__dirname, '..',  'assets', item.image_url); // adjust path if needed
+        const imageData = fs.readFileSync(imagePath);
+        const base64Image = `data:image/jpeg;base64,${imageData.toString('base64')}`;
+        return { ...item, image_base64: base64Image };
+      } catch (e) {
+        return { ...item, image_base64: null }; // fallback if image not found
+      }
+    });
+
+    res.json(itemsWithBase64);
   } catch (err) {
+    console.error('Error fetching cart:', err);
     res.status(500).json({ error: err.message });
   }
 });
+
 
 router.put('/update', async (req, res) => {
   const { user_id, product_id, quantity } = req.body;

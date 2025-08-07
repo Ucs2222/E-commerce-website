@@ -22,22 +22,40 @@ router.post('/add', async (req, res) => {
   }
 });
 
+const fs = require('fs');
+const path = require('path');
+
 router.get('/:userId', async (req, res) => {
   const userId = req.params.userId;
   try {
     const [items] = await pool.execute(
-      `SELECT *
+      `SELECT w.*, p.id as product_id, p.name, p.price, p.image_url, p.description
        FROM wishlist w
        JOIN products p ON w.product_id = p.id
        WHERE w.user_id = ?`,
       [userId]
     );
-    return res.json(items);
+
+    // Convert image to base64
+    const updatedItems = await Promise.all(items.map(async (item) => {
+      const imagePath = path.join(__dirname, '..', 'assets', item.image_url); // adjust if needed
+      try {
+        const imageBuffer = fs.readFileSync(imagePath);
+        const base64Image = `data:image/png;base64,${imageBuffer.toString('base64')}`;
+        return { ...item, image_base64: base64Image };
+      } catch (err) {
+        console.error('Error reading image:', imagePath);
+        return { ...item, image_base64: null };
+      }
+    }));
+
+    return res.json(updatedItems);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: err.message });
   }
 });
+
 router.delete('/remove', async (req, res) => {
   const { user_id, product_id } = req.body;
 

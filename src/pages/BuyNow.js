@@ -60,7 +60,7 @@ const BuyNow = () => {
       <div className="card shadow p-4">
         <div className="row">
           <div className="col-md-5">
-            <img src={product.image_url} alt={product.name} className="img-fluid rounded" />
+            <img src={product.image_base64} alt={product.name} className="img-fluid rounded" />
           </div>
           <div className="col-md-7">
             <h3>{product.name}</h3>

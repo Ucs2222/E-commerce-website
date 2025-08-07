@@ -20,6 +20,7 @@ function Home() {
         background: linear-gradient(135deg, #4f46e5, #8b5cf6, #ec4899);
         min-height: 100vh;
         color: white;
+        padding-bottom: 60px;
       }
       .product-card {
         background: white;
@@ -28,6 +29,10 @@ function Home() {
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         color: #111;
         transition: transform 0.2s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       }
       .product-card:hover {
         transform: translateY(-5px);
@@ -189,16 +194,15 @@ function Home() {
           <div className="row g-4">
             {filteredProducts.map((p) => (
               <div className="col-md-4 col-lg-3" key={p.id}>
-                <div className="product-card h-100">
+                <div className="product-card">
                   <Link to={`/product/${p.id}`}>
-  <img
-    src={p.image_url}
-    alt={p.name}
-    className="img-fluid mb-3"
-    style={{ cursor: 'pointer' }}
-  />
-</Link>
-
+                    <img
+                      src={p.image_base64}
+                      alt={p.name}
+                      className="img-fluid mb-3"
+                      style={{ cursor: 'pointer' }}
+                    />
+                  </Link>
                   <h5>{p.name}</h5>
                   <p className="mb-1">₹{p.price}</p>
                   <p className="mb-1">{p.description}</p>

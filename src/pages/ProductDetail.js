@@ -146,7 +146,7 @@ const ProductDetail = () => {
 
         <div className="text-center mb-4">
           <img
-            src={product.image_url}
+            src={product.image_base64}
             alt={product.name}
             className="img-fluid rounded"
             style={{ maxHeight: '300px', cursor: 'pointer' }}

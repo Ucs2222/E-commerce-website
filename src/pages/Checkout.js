@@ -151,7 +151,7 @@ const Checkout = () => {
           {productId && singleProduct ? (
             <div className="d-flex">
               <img
-                src={singleProduct.image_url}
+                src={singleProduct.image_base64}
                 alt={singleProduct.name}
                 className="img-fluid rounded me-3"
                 style={{ width: 120, height: 120, objectFit: 'cover' }}

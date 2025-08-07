@@ -19,6 +19,7 @@ const Wishlist = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
+
         setWishlistItems(res.data);
       })
       .catch(() => setWishlistItems([]));
@@ -52,7 +53,7 @@ const Wishlist = () => {
               <div key={item.product_id} className="col-md-6 col-lg-4">
                 <div className="card h-100 text-dark shadow-sm">
                   <img
-                    src={item.image_url}
+                    src={item.image_base64}
                     className="card-img-top"
                     alt={item.name}
                     style={{ objectFit: 'cover', height: '200px' }}
