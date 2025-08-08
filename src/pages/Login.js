@@ -70,7 +70,7 @@ function Login() {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', form);
+      const res = await axios.post('http://13.232.233.89/api/auth/login', form);
       const user = res.data.user;
 
       localStorage.setItem('token', res.data.token);

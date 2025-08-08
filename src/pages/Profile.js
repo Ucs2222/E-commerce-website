@@ -11,7 +11,7 @@ const Profile = () => {
     if (!token) return;
 
     axios
-      .get('http://localhost:5000/api/auth/profile', {
+      .get('http://13.232.233.89/api/auth/profile', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setUser(res.data))

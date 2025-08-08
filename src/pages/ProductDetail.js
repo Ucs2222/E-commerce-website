@@ -11,7 +11,7 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/products/${id}`)
+    axios.get(`http://13.232.233.89/api/products/${id}`)
       .then(res => {
         setProduct(res.data);
         setLoading(false);
@@ -32,13 +32,13 @@ const ProductDetail = () => {
     }
 
     try {
-      const userRes = await axios.get('http://localhost:5000/api/auth/profile', {
+      const userRes = await axios.get('http://13.232.233.89/api/auth/profile', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const user_id = userRes.data.id;
 
       await axios.post(
-        'http://localhost:5000/api/cart/add',
+        'http://13.232.233.89/api/cart/add',
         { user_id, product_id: product.id, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -59,13 +59,13 @@ const ProductDetail = () => {
     }
 
     try {
-      const profileRes = await axios.get('http://localhost:5000/api/auth/profile', {
+      const profileRes = await axios.get('http://13.232.233.89/api/auth/profile', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const userId = profileRes.data.id;
 
       await axios.post(
-        'http://localhost:5000/api/wishlist/add',
+        'http://13.232.233.89/api/wishlist/add',
         { user_id: userId, product_id: product.id },
         { headers: { 'Content-Type': 'application/json' } }
       );
@@ -86,14 +86,14 @@ const ProductDetail = () => {
     }
 
     try {
-      const userRes = await axios.get('http://localhost:5000/api/auth/profile', {
+      const userRes = await axios.get('http://13.232.233.89/api/auth/profile', {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       const user_id = userRes.data.id;
 
       await axios.post(
-        'http://localhost:5000/api/cart/add',
+        'http://13.232.233.89/api/cart/add',
         { user_id, product_id: product.id, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } }
       );

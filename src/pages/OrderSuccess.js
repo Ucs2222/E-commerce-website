@@ -19,7 +19,7 @@ const OrderSuccess = () => {
     }
 
     axios
-      .get('http://localhost:5000/api/auth/profile', {
+      .get('http://13.232.233.89/api/auth/profile', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setUser(res.data))
@@ -29,7 +29,7 @@ const OrderSuccess = () => {
   useEffect(() => {
     const fetchOrderSummary = async () => {
       try {
-        const res = await axios.post('http://localhost:5000/api/order/summary', orderItems);
+        const res = await axios.post('http://13.232.233.89/api/order/summary', orderItems);
         setFetchedProducts(res.data);
       } catch (err) {
         console.error('Failed to fetch order summary:', err);

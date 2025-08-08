@@ -59,9 +59,9 @@ function Home() {
     const fetchUser = async () => {
       try {
         const headers = { Authorization: `Bearer ${token}` };
-        const res = await axios.get('http://localhost:5000/api/auth/profile', { headers });
+        const res = await axios.get('http://13.232.233.89/api/auth/profile', { headers });
         setUser(res.data);
-        const cartRes = await axios.get(`http://localhost:5000/api/cart/count/${res.data.id}`);
+        const cartRes = await axios.get(`http://13.232.233.89/api/cart/count/${res.data.id}`);
         setCartCount(cartRes.data.count);
       } catch {
         navigate('/');
@@ -72,7 +72,7 @@ function Home() {
   }, [navigate]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products')
+    axios.get('http://13.232.233.89/api/products')
       .then((res) => {
         const available = res.data.filter(p => p.quantity > 0);
         setProducts(available);
@@ -101,8 +101,8 @@ function Home() {
     if (!token) return navigate('/');
     try {
       const headers = { Authorization: `Bearer ${token}` };
-      const res = await axios.get('http://localhost:5000/api/auth/profile', { headers });
-      await axios.post('http://localhost:5000/api/cart/add', {
+      const res = await axios.get('http://13.232.233.89/api/auth/profile', { headers });
+      await axios.post('http://13.232.233.89/api/cart/add', {
         user_id: res.data.id,
         product_id: productId,
         quantity: 1
@@ -119,8 +119,8 @@ function Home() {
     if (!token) return navigate('/');
     try {
       const headers = { Authorization: `Bearer ${token}` };
-      const res = await axios.get('http://localhost:5000/api/auth/profile', { headers });
-      await axios.post('http://localhost:5000/api/wishlist/add', {
+      const res = await axios.get('http://13.232.233.89/api/auth/profile', { headers });
+      await axios.post('http://13.232.233.89/api/wishlist/add', {
         user_id: res.data.id,
         product_id: productId
       }, { headers });
@@ -135,8 +135,8 @@ function Home() {
     if (!token) return navigate('/');
     try {
       const headers = { Authorization: `Bearer ${token}` };
-      const res = await axios.get('http://localhost:5000/api/auth/profile', { headers });
-      await axios.post('http://localhost:5000/api/cart/add', {
+      const res = await axios.get('http://13.232.233.89/api/auth/profile', { headers });
+      await axios.post('http://13.232.233.89/api/cart/add', {
         user_id: res.data.id,
         product_id: productId,
         quantity: 1

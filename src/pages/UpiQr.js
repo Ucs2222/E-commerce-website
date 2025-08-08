@@ -67,7 +67,7 @@ const generateQR = () => {
     try {
       setLoading(true);
 
-      const { data: user } = await axios.get('http://localhost:5000/api/auth/profile', {
+      const { data: user } = await axios.get('http://13.232.233.89/api/auth/profile', {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -95,7 +95,7 @@ const generateQR = () => {
         }));
       }
 
-      await axios.post('http://localhost:5000/api/order/place', payload, {
+      await axios.post('http://13.232.233.89/api/order/place', payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

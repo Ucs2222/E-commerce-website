@@ -73,7 +73,7 @@ const Register = () => {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/auth/register', form);
+      await axios.post('http://13.232.233.89/api/auth/register', form);
       showToast('✅ Registration successful! Please login.', 'success');
 
       setTimeout(() => {

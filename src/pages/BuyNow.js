@@ -11,7 +11,7 @@ const BuyNow = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/products/${id}`)
+    axios.get(`http://13.232.233.89/api/products/${id}`)
       .then(res => {
         setProduct(res.data);
         setLoading(false);
@@ -31,13 +31,13 @@ const BuyNow = () => {
     }
 
     try {
-      const userRes = await axios.get('http://localhost:5000/api/auth/profile', {
+      const userRes = await axios.get('http://13.232.233.89/api/auth/profile', {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       const user_id = userRes.data.id;
 
-      await axios.post('http://localhost:5000/api/cart/add', {
+      await axios.post('http://13.232.233.89/api/cart/add', {
         user_id,
         product_id: product.id,
         quantity,

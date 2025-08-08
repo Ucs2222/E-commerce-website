@@ -39,7 +39,7 @@ const RazorpayPayment = () => {
     }
 
     try {
-      const result = await axios.post('http://localhost:5000/create-order', {
+      const result = await axios.post('http://13.232.233.89/create-order', {
         amount: totalAmount * 100,
       });
 
@@ -68,12 +68,12 @@ const RazorpayPayment = () => {
               }));
 
           try {
-            const { data: user } = await axios.get('http://localhost:5000/api/auth/profile', {
+            const { data: user } = await axios.get('http://13.232.233.89/api/auth/profile', {
               headers: { Authorization: `Bearer ${token}` },
             });
 
             await axios.post(
-              'http://localhost:5000/api/order/place',
+              'http://13.232.233.89/api/order/place',
               {
                 user_id: user.id,
                 payment_method: 'razorpay',

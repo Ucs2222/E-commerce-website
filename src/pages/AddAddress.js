@@ -44,7 +44,7 @@ const AddAddress = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/api/users/${user.id}/addresses`, {
+      const res = await fetch(`http://13.232.233.89/api/users/${user.id}/addresses`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ address, address1, address2 }),

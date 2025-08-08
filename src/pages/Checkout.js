@@ -45,7 +45,7 @@ const Checkout = () => {
       return navigate('/login');
     }
 
-    axios.get('http://localhost:5000/api/auth/profile', {
+    axios.get('http://13.232.233.89/api/auth/profile', {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(res => {
@@ -56,7 +56,7 @@ const Checkout = () => {
           name: userData.name,
           phone: userData.phone || '',
         }));
-        return axios.get(`http://localhost:5000/api/address/${userData.id}`);
+        return axios.get(`http://13.232.233.89/api/address/${userData.id}`);
       })
       .then(addrRes => {
         setAddresses(addrRes.data);
@@ -70,13 +70,13 @@ const Checkout = () => {
   // Load cart or single product
   useEffect(() => {
     if (productId) {
-      axios.get(`http://localhost:5000/api/products/${productId}`)
+      axios.get(`http://13.232.233.89/api/products/${productId}`)
         .then(res => setSingleProduct(res.data))
         .catch(() => alert('Product not found'));
     } else if (stateCart) {
       setCartItems(stateCart);
     } else if (user?.id) {
-      axios.get(`http://localhost:5000/api/cart/${user.id}`)
+      axios.get(`http://13.232.233.89/api/cart/${user.id}`)
         .then(res => setCartItems(res.data))
         .catch(() => alert('Failed to load cart'));
     }
